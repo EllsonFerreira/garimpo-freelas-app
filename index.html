@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0f766e">
+  <title>Garimpo Freelas</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/icon-192.png">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topo">
+    <div class="topo-linha">
+      <h1 id="titulo-tela">Garimpo Freelas</h1>
+      <div class="topo-acoes">
+        <button id="btn-financas" class="icone texto-icone" aria-label="Finanças" title="Finanças" aria-pressed="false">R$</button>
+        <button id="btn-atualizar" class="icone" aria-label="Atualizar" title="Atualizar">⟳</button>
+        <button id="btn-config" class="icone" aria-label="Configurações" title="Configurações">⚙</button>
+      </div>
+    </div>
+    <p id="resumo" class="resumo"></p>
+    <nav id="abas" class="abas" role="tablist"></nav>
+    <div id="barra-filtros" class="barra-filtros">
+      <input id="busca" class="busca" type="search" placeholder="Buscar por título, categoria…" autocomplete="off">
+      <div class="filtros" id="filtros">
+        <select data-filtro="plataforma" aria-label="Plataforma">
+          <option value="">Todas as plataformas</option>
+          <option value="99freelas">99Freelas</option>
+          <option value="workana">Workana</option>
+        </select>
+        <select data-filtro="valor" aria-label="Valor" title="Orçamento aberto usa o valor estimado (veja o cálculo no detalhe)">
+          <option value="">Qualquer valor</option>
+          <option value="ate500">Até R$ 500</option>
+          <option value="500a2000">R$ 500 – 2.000</option>
+          <option value="2000a5000">R$ 2.000 – 5.000</option>
+          <option value="5000mais">Acima de R$ 5.000</option>
+          <option value="sem">Orçamento aberto</option>
+        </select>
+        <select data-filtro="complexidade" aria-label="Complexidade">
+          <option value="">Qualquer complexidade</option>
+          <option value="baixa">Baixa</option>
+          <option value="media">Média</option>
+          <option value="alta">Alta</option>
+        </select>
+        <select data-filtro="prazo" aria-label="Prazo de entrega">
+          <option value="">Qualquer prazo</option>
+          <option value="3">Até 3 dias</option>
+          <option value="7">Até 7 dias</option>
+          <option value="15">Até 15 dias</option>
+          <option value="16">Mais de 15 dias</option>
+        </select>
+        <select data-filtro="envio" aria-label="Disponibilidade para enviar proposta">
+          <option value="">Qualquer disponibilidade</option>
+          <option value="agora">Posso enviar agora</option>
+        </select>
+        <button type="button" id="limpar-filtros" class="limpar" hidden>Limpar filtros</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="lista" class="lista" aria-live="polite"></main>
+
+  <dialog id="detalhe" class="folha"></dialog>
+
+  <dialog id="config" class="folha">
+    <form method="dialog" id="form-config" class="config">
+      <h2>Conexão com o GitHub</h2>
+      <p class="ajuda">O app lê as oportunidades do seu repositório privado. Crie um token
+        <em>fine-grained</em> com acesso só ao repositório <code>garimpo-freelas</code> e permissão
+        <strong>Contents: Read and write</strong>. O token fica salvo apenas neste aparelho.</p>
+      <a class="link" href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">Criar token no GitHub ↗</a>
+      <label>Usuário/organização<input name="owner" required autocomplete="off"></label>
+      <label>Repositório<input name="repo" required autocomplete="off"></label>
+      <label>Token<input name="token" type="password" autocomplete="off" placeholder="github_pat_…"></label>
+      <h2>Taxas das plataformas</h2>
+      <p class="ajuda">Percentual que a plataforma desconta do seu recebimento. Confira o valor atual no
+        painel de cada uma; ele é usado para calcular o líquido.</p>
+      <div class="linha-campos">
+        <label>99Freelas (%)<input name="taxa99" inputmode="decimal" autocomplete="off" placeholder="ex.: 15"></label>
+        <label>Workana (%)<input name="taxaWk" inputmode="decimal" autocomplete="off" placeholder="ex.: 20"></label>
+      </div>
+      <div class="linha-botoes">
+        <button value="cancelar" formnovalidate class="secundario">Cancelar</button>
+        <button value="salvar" class="primario">Salvar</button>
+      </div>
+      <button type="button" id="btn-sair" class="perigo">Apagar token deste aparelho</button>
+    </form>
+  </dialog>
+
+  <div id="aviso" class="aviso" role="status" hidden></div>
+
+  <script src="app.js" type="module"></script>
+</body>
+</html>
