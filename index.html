@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0f766e">
+  <title>Garimpo Freelas</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/icon-192.png">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="stylesheet" href="style.css?v=16">
+</head>
+<body>
+  <header class="topo">
+    <div class="navbar">
+      <div class="marca">
+        <h1 id="titulo-tela">Garimpo Freelas</h1>
+        <p id="resumo" class="resumo"></p>
+      </div>
+      <nav id="abas" class="abas" role="tablist" aria-label="Status"></nav>
+      <div class="topo-acoes">
+        <button id="btn-financas" class="icone texto-icone" aria-label="Finanças" title="Finanças" aria-pressed="false">R$</button>
+        <button id="btn-atualizar" class="icone" aria-label="Atualizar" title="Atualizar">⟳</button>
+        <button id="btn-config" class="icone" aria-label="Configurações" title="Configurações">⚙</button>
+      </div>
+    </div>
+    <div id="barra-filtros" class="barra-filtros">
+      <div class="barra">
+        <input id="busca" class="busca" type="search" placeholder="Buscar projeto" autocomplete="off">
+        <button type="button" id="btn-filtros" class="botao-barra" aria-haspopup="dialog">
+          <span aria-hidden="true">☰</span> Filtros <span id="cont-filtros" class="contador" hidden></span>
+        </button>
+        <label class="botao-barra ordem" title="Ordenar a lista">
+          <span aria-hidden="true">⇅</span>
+          <select id="ordem" aria-label="Ordenar a lista">
+            <option value="nota">Maior nota</option>
+            <option value="recentes">Mais recentes</option>
+            <option value="complexidade">Menor complexidade</option>
+            <option value="valor">Maior valor</option>
+            <option value="concorrencia">Menos propostas</option>
+          </select>
+        </label>
+      </div>
+      <div id="chips" class="chips" hidden></div>
+    </div>
+  </header>
+
+  <main id="lista" class="lista" aria-live="polite"></main>
+
+  <dialog id="detalhe" class="folha"></dialog>
+  <dialog id="painel-filtros" class="folha painel">
+    <div class="folha-topo">
+      <h2>Filtros</h2>
+      <button class="fechar" data-acao="fechar" aria-label="Fechar">×</button>
+    </div>
+    <div class="folha-corpo">
+      <div id="grupos-filtros"></div>
+      <div class="linha-botoes rodape-painel">
+        <button type="button" class="secundario" data-acao="limpar">Limpar tudo</button>
+        <button type="button" class="primario" data-acao="fechar" id="ver-filtrados">Ver projetos</button>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog id="config" class="folha">
+    <form method="dialog" id="form-config" class="config">
+      <h2>Conexão com o GitHub</h2>
+      <p class="ajuda">O app lê as oportunidades do seu repositório privado. Crie um token
+        <em>fine-grained</em> com acesso só ao repositório <code>garimpo-freelas</code> e permissão
+        <strong>Contents: Read and write</strong>. O token fica salvo apenas neste aparelho.</p>
+      <a class="link" href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">Criar token no GitHub ↗</a>
+      <label>Usuário/organização<input name="owner" required autocomplete="off"></label>
+      <label>Repositório<input name="repo" required autocomplete="off"></label>
+      <label>Token<input name="token" type="password" autocomplete="off" placeholder="github_pat_…"></label>
+      <h2>Seu valor por hora</h2>
+      <p class="ajuda">Usado nas estimativas dos projetos de orçamento aberto e no "Gerar proposta"
+        (valor sugerido = horas que você gastaria × este valor). Propostas já escritas mantêm o valor delas.</p>
+      <label>Valor da hora (R$)<input name="valorHora" inputmode="decimal" autocomplete="off" placeholder="ex.: 35"></label>
+      <h2>Avisos de liberação</h2>
+      <p class="ajuda">Projetos exclusivos com nota alta já geram aviso automático quando liberam. Para
+        agendar avisos de outros projetos pelo botão "Avisar no celular", informe aqui o mesmo tópico
+        que você assinou no app ntfy. Fica salvo só neste aparelho.</p>
+      <label>Tópico do ntfy<input name="ntfy" autocomplete="off" placeholder="garimpo-…"></label>
+      <h2>Taxas das plataformas</h2>
+      <p class="ajuda">Percentual que a plataforma desconta do seu recebimento. Confira o valor atual no
+        painel de cada uma; ele é usado para calcular o líquido.</p>
+      <div class="linha-campos">
+        <label>99Freelas (%)<input name="taxa99" inputmode="decimal" autocomplete="off" placeholder="ex.: 15"></label>
+        <label>Workana (%)<input name="taxaWk" inputmode="decimal" autocomplete="off" placeholder="ex.: 20"></label>
+      </div>
+      <div class="linha-botoes">
+        <button value="cancelar" formnovalidate class="secundario">Cancelar</button>
+        <button value="salvar" class="primario">Salvar</button>
+      </div>
+      <button type="button" id="btn-sair" class="perigo">Apagar token deste aparelho</button>
+    </form>
+  </dialog>
+
+  <div id="aviso" class="aviso" role="status" hidden></div>
+
+  <script src="app.js?v=16" type="module"></script>
+</body>
+</html>
